@@ -1,4 +1,7 @@
+using LocadoraDeVeiculos.Aplicacao.Servicos;
+using LocadoraDeVeiculos.Dominio.ModuloGrupoVeiculos;
 using LocadoraDeVeiculos.Infra.Orm.Compartilhado;
+using LocadoraDeVeiculos.Infra.Orm.ModuloGrupoVeiculos;
 using System.Reflection;
 
 namespace LocadoraDeVeiculos.WebApp;
@@ -11,6 +14,8 @@ public class Program
 
         builder.Services.AddDbContext<LocadoraDbContext>();
 
+        builder.Services.AddScoped<IRepositorioGrupoVeiculos, RepositorioGrupoVeiculosEmOrm>();
+        builder.Services.AddScoped<ServicoGrupoVeiculos>();
 
         builder.Services.AddAutoMapper(cfg =>
         {

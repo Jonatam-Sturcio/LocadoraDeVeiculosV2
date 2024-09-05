@@ -13,21 +13,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Testes", "5. Testes", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Apresentação", "1. Apresentação", "{CF724C92-0E03-460A-9620-76186354FB44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeVeiculos.Dominio", "LocadoraDeVeiculos.Dominio\LocadoraDeVeiculos.Dominio.csproj", "{B5973829-2E67-4A20-B51D-EBC3648CF433}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeVeiculos.Dominio", "LocadoraDeVeiculos.Dominio\LocadoraDeVeiculos.Dominio.csproj", "{B5973829-2E67-4A20-B51D-EBC3648CF433}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeVeiculos.Infra.Orm", "LocadoraDeVeiculos.Infra.Orm\LocadoraDeVeiculos.Infra.Orm.csproj", "{D6F4615A-8813-498F-9673-BC2BBE78A1E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeVeiculos.Infra.Orm", "LocadoraDeVeiculos.Infra.Orm\LocadoraDeVeiculos.Infra.Orm.csproj", "{D6F4615A-8813-498F-9673-BC2BBE78A1E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.1. Unidade", "5.1. Unidade", "{DFD1C908-2F8B-4C1B-8C10-59E28EA1D4F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.2. Integração", "5.2. Integração", "{9E63FAFC-4860-4022-A0A2-F2105E3AF72E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeVeiculos.Teste.Unidade", "LocadoraDeVeiculos.Teste.Unidade\LocadoraDeVeiculos.Teste.Unidade.csproj", "{C703254E-DEA6-4FC6-A128-FAED17CF3EEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeVeiculos.Teste.Unidade", "LocadoraDeVeiculos.Teste.Unidade\LocadoraDeVeiculos.Teste.Unidade.csproj", "{C703254E-DEA6-4FC6-A128-FAED17CF3EEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeVeiculos.Testes.Integracao", "LocadoraDeVeiculos.Testes.Integracao\LocadoraDeVeiculos.Testes.Integracao.csproj", "{C2102354-299D-49C3-BB31-17BA039E5543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeVeiculos.Testes.Integracao", "LocadoraDeVeiculos.Testes.Integracao\LocadoraDeVeiculos.Testes.Integracao.csproj", "{C2102354-299D-49C3-BB31-17BA039E5543}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeVeiculos.Aplicacao", "LocadoraDeVeiculos.Aplicacao\LocadoraDeVeiculos.Aplicacao.csproj", "{BC6FD356-0711-4343-B3AA-D73A14C6B345}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeVeiculos.Aplicacao", "LocadoraDeVeiculos.Aplicacao\LocadoraDeVeiculos.Aplicacao.csproj", "{BC6FD356-0711-4343-B3AA-D73A14C6B345}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeVeiculos.WebApp", "LocadoraDeVeiculos.WebApp\LocadoraDeVeiculos.WebApp.csproj", "{6578587E-BEA6-43AE-B3D8-7A52E6A61AE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeVeiculos.WebApp", "LocadoraDeVeiculos.WebApp\LocadoraDeVeiculos.WebApp.csproj", "{6578587E-BEA6-43AE-B3D8-7A52E6A61AE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

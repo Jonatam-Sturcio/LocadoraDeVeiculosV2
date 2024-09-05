@@ -1,10 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using LocadoraDeVeiculos.WebApp.Models
+@{
+	MensagemViewModel? mensagem = ViewBag.Mensagem ?? null;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title - LocadoraDeVeiculos.WebApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LocadoraDeVeiculos.WebApp.styles.css" asp-append-version="true" />
 </head>
@@ -28,9 +33,10 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+	    <main role="main" class="pb-3">
+            <partial name="_Mensagem" model="mensagem"></partial>
+		    @RenderBody()
+	    </main>
     </div>
 
     <footer class="border-top footer text-muted">
