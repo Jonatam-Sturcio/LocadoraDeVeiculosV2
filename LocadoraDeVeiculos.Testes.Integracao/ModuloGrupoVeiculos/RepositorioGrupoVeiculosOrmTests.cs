@@ -17,6 +17,7 @@ public class RepositorioGrupoVeiculosOrmTests
     {
         dbContext = new LocadoraDbContext();
 
+        dbContext.PlanosCobranca.RemoveRange(dbContext.PlanosCobranca);
         dbContext.GruposVeiculos.RemoveRange(dbContext.GruposVeiculos);
 
         repositorio = new RepositorioGrupoVeiculosEmOrm(dbContext);
