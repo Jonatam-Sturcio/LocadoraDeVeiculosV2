@@ -11,7 +11,7 @@ public class RepositorioGrupoVeiculosEmOrm : RepositorioBaseEmOrm<GrupoVeiculos>
 
     protected override DbSet<GrupoVeiculos> ObterRegistros()
     {
-        return dbContext.GrupoVeiculos;
+        return dbContext.GruposVeiculos;
     }
 
 }
