@@ -1,4 +1,5 @@
-﻿using LocadoraDeVeiculos.Infra.Orm.Compartilhado;
+﻿using LocadoraDeVeiculos.Dominio.ModuloLocacao;
+using LocadoraDeVeiculos.Infra.Orm.Compartilhado;
 
 namespace LocadoraDeVeiculos.Dominio.ModuloTaxa;
 
@@ -7,8 +8,12 @@ public class Taxa : EntidadeBase
     public string Nome { get; set; }
     public decimal Valor { get; set; }
     public TipoCobrancaEnum TipoCobranca { get; set; }
+    public List<Locacao>? Locacoes { get; set; }
 
-    protected Taxa() { }
+    protected Taxa()
+    {
+        Locacoes = new();
+    }
 
     public Taxa(string nome, decimal valor, TipoCobrancaEnum tipoCobranca) : this()
     {
