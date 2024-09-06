@@ -1,78 +1,62 @@
 ﻿using FizzWare.NBuilder;
 using LocadoraDeVeiculos.Dominio.ModuloTaxa;
-using LocadoraDeVeiculos.Infra.Orm.Compartilhado;
-using LocadoraDeVeiculos.Infra.Orm.ModuloTaxa;
+using LocadoraDeVeiculos.Testes.Integracao.Compartilhado;
 
 namespace LocadoraDeVeiculos.Testes.Integracao.ModuloTaxa;
 [TestClass]
 [TestCategory("Integração")]
-public class RepositorioTaxaEmOrmTests
+public class RepositorioTaxaEmOrmTests : RepositorioEmOrmTestsBase
 {
-    private LocadoraDbContext dbContext;
-    private RepositorioTaxaEmOrm repositorio;
+	[TestMethod]
+	public void Deve_Inserir_Taxa()
+	{
+		var taxa = Builder<Taxa>
+			.CreateNew()
+			.With(t => t.Id = 0)
+			.Build();
 
-    [TestInitialize]
-    public void Inicializar()
-    {
-        dbContext = new LocadoraDbContext();
+		repositorioTaxa.Inserir(taxa);
 
-        dbContext.Taxas.RemoveRange(dbContext.Taxas);
+		var taxaSelecionada = repositorioTaxa.SelecionarPorId(taxa.Id);
 
-        repositorio = new RepositorioTaxaEmOrm(dbContext);
+		Assert.IsNotNull(taxaSelecionada);
+		Assert.AreEqual(taxa, taxaSelecionada);
+	}
 
-        BuilderSetup.SetCreatePersistenceMethod<Taxa>(repositorio.Inserir);
-    }
+	[TestMethod]
+	public void Deve_Editar_Taxa()
+	{
+		var taxa = Builder<Taxa>
+			.CreateNew()
+			.With(t => t.Id = 0)
+			.Persist();
 
-    [TestMethod]
-    public void Deve_Inserir_Taxa()
-    {
-        var taxa = Builder<Taxa>
-            .CreateNew()
-            .With(t => t.Id = 0)
-            .Build();
+		taxa.Nome = "Taxa Atualizada";
+		taxa.Valor = 100.0m;
 
-        repositorio.Inserir(taxa);
+		repositorioTaxa.Editar(taxa);
 
-        var taxaSelecionada = repositorio.SelecionarPorId(taxa.Id);
+		var taxaSelecionada = repositorioTaxa.SelecionarPorId(taxa.Id);
 
-        Assert.IsNotNull(taxaSelecionada);
-        Assert.AreEqual(taxa, taxaSelecionada);
-    }
+		Assert.IsNotNull(taxaSelecionada);
+		Assert.AreEqual(taxa, taxaSelecionada);
+	}
 
-    [TestMethod]
-    public void Deve_Editar_Taxa()
-    {
-        var taxa = Builder<Taxa>
-            .CreateNew()
-            .With(t => t.Id = 0)
-            .Persist();
+	[TestMethod]
+	public void Deve_Excluir_Taxa()
+	{
+		var taxa = Builder<Taxa>
+			.CreateNew()
+			.With(t => t.Id = 0)
+			.Persist();
 
-        taxa.Nome = "Taxa Atualizada";
-        taxa.Valor = 100.0m;
+		repositorioTaxa.Excluir(taxa);
 
-        repositorio.Editar(taxa);
+		var taxaSelecionada = repositorioTaxa.SelecionarPorId(taxa.Id);
 
-        var taxaSelecionada = repositorio.SelecionarPorId(taxa.Id);
+		var taxas = repositorioTaxa.SelecionarTodos();
 
-        Assert.IsNotNull(taxaSelecionada);
-        Assert.AreEqual(taxa, taxaSelecionada);
-    }
-
-    [TestMethod]
-    public void Deve_Excluir_Taxa()
-    {
-        var taxa = Builder<Taxa>
-            .CreateNew()
-            .With(t => t.Id = 0)
-            .Persist();
-
-        repositorio.Excluir(taxa);
-
-        var taxaSelecionada = repositorio.SelecionarPorId(taxa.Id);
-
-        var taxas = repositorio.SelecionarTodos();
-
-        Assert.IsNull(taxaSelecionada);
-        Assert.AreEqual(0, taxas.Count);
-    }
+		Assert.IsNull(taxaSelecionada);
+		Assert.AreEqual(0, taxas.Count);
+	}
 }
