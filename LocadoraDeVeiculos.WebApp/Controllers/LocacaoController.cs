@@ -72,6 +72,101 @@ public class LocacaoController : WebControllerBase
 
         return RedirectToAction("ConfirmarAbertura");
     }
+    public IActionResult ConfirmarAbertura()
+    {
+        if (TempData["LocacaoParaInsercao"] is null)
+            return RedirectToAction(nameof(Inserir));
+
+        var locacaoDataJson = TempData["LocacaoParaInsercao"]!.ToString();
+
+        var confirmarVm = JsonSerializer.Deserialize<ConfirmarAberturaLocacaoViewModel>(locacaoDataJson);
+
+        return View(confirmarVm);
+    }
+
+    [HttpPost]
+    public IActionResult ConfirmarAbertura(ConfirmarAberturaLocacaoViewModel confirmarVm)
+    {
+        var locacao = mapeador.Map<Locacao>(confirmarVm);
+
+        var resultado = servicoLocacao.Inserir(locacao);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ApresentarMensagemSucesso($"A locação ID [{locacao.Id}] foi aberta com sucesso!");
+
+        return RedirectToAction(nameof(Listar));
+    }
+
+    public IActionResult RealizarDevolucao(int id)
+    {
+        var resultado = servicoLocacao.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        var locacao = resultado.Value;
+
+        var devolucaoVm = mapeador.Map<RealizarDevolucaoViewModel>(locacao);
+
+        return View(devolucaoVm);
+    }
+
+    [HttpPost]
+    public IActionResult RealizarDevolucao(RealizarDevolucaoViewModel devolucaoVm)
+    {
+        var locacao = mapeador.Map<Locacao>(devolucaoVm);
+
+        var confirmarVm = mapeador.Map<ConfirmarDevolucaoLocacaoViewModel>(locacao);
+
+        TempData["LocacaoParaDevolucao"] = JsonSerializer.Serialize(confirmarVm);
+
+        return RedirectToAction("ConfirmarDevolucao");
+
+    }
+
+    public IActionResult ConfirmarDevolucao()
+    {
+        if (TempData["LocacaoParaDevolucao"] is null)
+            return RedirectToAction(nameof(Listar));
+
+        var locacaoDataJson = TempData["LocacaoParaDevolucao"]!.ToString();
+
+        var confirmarVm = JsonSerializer.Deserialize<ConfirmarDevolucaoLocacaoViewModel>(locacaoDataJson);
+
+        return View(confirmarVm);
+    }
+
+    [HttpPost]
+    public IActionResult ConfirmarDevolucao(ConfirmarDevolucaoLocacaoViewModel confirmarVm)
+    {
+        var locacaoOriginal = servicoLocacao.SelecionarPorId(confirmarVm.Id).Value;
+
+        var locacaoAtualizada = mapeador.Map<ConfirmarDevolucaoLocacaoViewModel, Locacao>(confirmarVm, locacaoOriginal);
+
+        var resultado = servicoLocacao.RealizarDevolucao(locacaoAtualizada);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ApresentarMensagemSucesso($"A locação ID [{locacaoAtualizada.Id}] foi concluída com sucesso!");
+
+        return RedirectToAction(nameof(Listar));
+    }
+
     private InserirLocacaoViewModel CarregarDadosFormulario(InserirLocacaoViewModel? formularioVm = null)
     {
         var condutores = servicoCondutor.SelecionarTodos().Value;
