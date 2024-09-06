@@ -56,6 +56,10 @@ public class Program
 
         builder.Services.AddScoped<FotoValueResolver>();
         builder.Services.AddScoped<GrupoVeiculosValueResolver>();
+        builder.Services.AddScoped<TaxasSelecionadasValueResolver>();
+        builder.Services.AddScoped<TaxasValueResolver>();
+        builder.Services.AddScoped<CondutoresValueResolver>();
+        builder.Services.AddScoped<VeiculosValueResolver>();
 
         builder.Services.AddAutoMapper(cfg =>
         {
