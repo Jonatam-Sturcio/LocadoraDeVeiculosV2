@@ -11,6 +11,7 @@ public class Veiculo : EntidadeBase
     public byte[] Foto { get; set; }
     public int GrupoVeiculosId { get; set; }
     public GrupoVeiculos? GrupoVeiculos { get; set; }
+    public bool Alugado { get; set; }
 
     protected Veiculo() { }
     public Veiculo(
@@ -45,5 +46,15 @@ public class Veiculo : EntidadeBase
             erros.Add("O grupo de veículos é obrigatório");
 
         return erros;
+    }
+
+    public void Alugar()
+    {
+        Alugado = true;
+    }
+
+    public void Desocupar()
+    {
+        Alugado = false;
     }
 }
