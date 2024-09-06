@@ -2,5 +2,5 @@
 public interface IRepositorioConfiguracaoCombustivel
 {
     void GravarConfiguracao(ConfiguracaoCombustivel configuracaoCombustivel);
-    ConfiguracaoCombustivel? ObterConfiguracao();
+    ConfiguracaoCombustivel? ObterConfiguracao(int idEmpresa);
 }

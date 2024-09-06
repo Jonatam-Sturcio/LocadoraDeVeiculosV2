@@ -53,12 +53,9 @@ public class ServicoGrupoVeiculos
         return Result.Ok(grupo);
     }
 
-    public Result<List<GrupoVeiculos>> SelecionarTodos()
+    public Result<List<GrupoVeiculos>> SelecionarTodos(int empresaId)
     {
-        var grupos = repositorioGrupo.SelecionarTodos();
-
-        if (grupos is null)
-            return Result.Fail("O grupo não foi encontrado");
+        var grupos = repositorioGrupo.Filtrar(g => g.EmpresaId == empresaId);
 
         return Result.Ok(grupos);
     }

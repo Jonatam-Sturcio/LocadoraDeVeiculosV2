@@ -1,12 +1,9 @@
-﻿using LocadoraDeVeiculos.Dominio.ModuloAutenticacao;
-using LocadoraDeVeiculos.Infra.Orm.Compartilhado;
+﻿using LocadoraDeVeiculos.Infra.Orm.Compartilhado;
 
 namespace LocadoraDeVeiculos.Dominio.ModuloFuncionario;
 public class Funcionario : EntidadeBase
 {
     public int UsuarioId { get; set; }
-    public int EmpresaId { get; set; }
-    public Usuario? Empresa { get; set; }
     public string NomeCompleto { get; set; }
     public string Email { get; set; }
     public DateTime Admissao { get; set; }

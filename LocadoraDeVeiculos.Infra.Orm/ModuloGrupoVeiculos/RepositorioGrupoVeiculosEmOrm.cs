@@ -14,4 +14,8 @@ public class RepositorioGrupoVeiculosEmOrm : RepositorioBaseEmOrm<GrupoVeiculos>
         return dbContext.GruposVeiculos;
     }
 
+    public List<GrupoVeiculos> Filtrar(Func<GrupoVeiculos, bool> predicate)
+    {
+        return ObterRegistros().Where(predicate).ToList();
+    }
 }

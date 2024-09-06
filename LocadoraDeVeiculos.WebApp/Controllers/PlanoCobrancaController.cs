@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
+using LocadoraDeVeiculos.Aplicacao.ModuloAutenticacao;
 using LocadoraDeVeiculos.Aplicacao.ModuloPlanoCobranca;
 using LocadoraDeVeiculos.Aplicacao.Servicos;
 using LocadoraDeVeiculos.Dominio.ModuloPlanoCobranca;
 using LocadoraDeVeiculos.WebApp.Controllers.Compartilhado;
 using LocadoraDeVeiculos.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LocadoraDeVeiculos.WebApp.Controllers;
 
+[Authorize(Roles = "Empresa,Funcionario")]
 public class PlanoCobrancaController : WebControllerBase
 {
     private readonly ServicoPlanoCobranca servico;
@@ -16,9 +19,10 @@ public class PlanoCobrancaController : WebControllerBase
     private readonly IMapper mapeador;
 
     public PlanoCobrancaController(
+        ServicoAutenticacao servicoAuth,
         ServicoPlanoCobranca servico,
         ServicoGrupoVeiculos servicoGrupos,
-        IMapper mapeador)
+        IMapper mapeador) : base(servicoAuth)
     {
         this.servico = servico;
         this.servicoGrupos = servicoGrupos;
@@ -27,7 +31,7 @@ public class PlanoCobrancaController : WebControllerBase
 
     public IActionResult Listar()
     {
-        var resultado = servico.SelecionarTodos();
+        var resultado = servico.SelecionarTodos(EmpresaId.GetValueOrDefault());
 
         if (resultado.IsFailed)
         {
@@ -85,7 +89,7 @@ public class PlanoCobrancaController : WebControllerBase
 
         var editarVm = mapeador.Map<EditarPlanoCobrancaViewModel>(planoCobranca);
 
-        var grupos = servicoGrupos.SelecionarTodos().Value;
+        var grupos = servicoGrupos.SelecionarTodos(EmpresaId.GetValueOrDefault()).Value;
 
         editarVm.GruposVeiculos = grupos
             .Select(g => new SelectListItem(g.Nome, g.Id.ToString()));
@@ -170,7 +174,7 @@ public class PlanoCobrancaController : WebControllerBase
 
     private FormularioPlanoCobrancaViewModel? CarregarDadosFormulario(FormularioPlanoCobrancaViewModel? dadosPrevios = null)
     {
-        var resultadoGrupos = servicoGrupos.SelecionarTodos();
+        var resultadoGrupos = servicoGrupos.SelecionarTodos(EmpresaId.GetValueOrDefault());
 
         if (resultadoGrupos.IsFailed)
         {
