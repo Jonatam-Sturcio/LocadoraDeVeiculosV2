@@ -1,0 +1,95 @@
+﻿using AutoMapper;
+using LocadoraDeVeiculos.Aplicacao.ModuloCondutor;
+using LocadoraDeVeiculos.Aplicacao.ModuloLocacao;
+using LocadoraDeVeiculos.Aplicacao.ModuloTaxa;
+using LocadoraDeVeiculos.Aplicacao.ModuloVeiculo;
+using LocadoraDeVeiculos.Dominio.ModuloLocacao;
+using LocadoraDeVeiculos.WebApp.Controllers.Compartilhado;
+using LocadoraDeVeiculos.WebApp.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text.Json;
+
+namespace LocadoraDeVeiculos.WebApp.Controllers;
+
+public class LocacaoController : WebControllerBase
+{
+    private readonly ServicoLocacao servicoLocacao;
+    private readonly ServicoVeiculo servicoVeiculo;
+    private readonly ServicoCondutor servicoCondutor;
+    private readonly ServicoTaxa servicoTaxa;
+    private readonly IMapper mapeador;
+
+    public LocacaoController(
+        ServicoLocacao servicoLocacao,
+        ServicoVeiculo servicoVeiculo,
+        ServicoCondutor servicoCondutor,
+        ServicoTaxa servicoTaxa,
+        IMapper mapeador
+    )
+    {
+        this.servicoLocacao = servicoLocacao;
+        this.servicoVeiculo = servicoVeiculo;
+        this.servicoCondutor = servicoCondutor;
+        this.servicoTaxa = servicoTaxa;
+        this.mapeador = mapeador;
+    }
+
+    public IActionResult Listar()
+    {
+        var resultado = servicoLocacao.SelecionarTodos();
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        var locacoes = resultado.Value;
+
+        var listarLocacoesVm = mapeador.Map<IEnumerable<ListarLocacaoViewModel>>(locacoes);
+
+        return View(listarLocacoesVm);
+    }
+
+    public IActionResult Inserir()
+    {
+        return View(CarregarDadosFormulario());
+    }
+
+    [HttpPost]
+    public IActionResult Inserir(InserirLocacaoViewModel inserirVm)
+    {
+        if (!ModelState.IsValid)
+            return View(CarregarDadosFormulario(inserirVm));
+
+        var locacao = mapeador.Map<Locacao>(inserirVm);
+
+        var confirmarVm = mapeador.Map<ConfirmarAberturaLocacaoViewModel>(locacao);
+
+        TempData["LocacaoParaInsercao"] = JsonSerializer.Serialize(confirmarVm);
+
+        return RedirectToAction("ConfirmarAbertura");
+    }
+    private InserirLocacaoViewModel CarregarDadosFormulario(InserirLocacaoViewModel? formularioVm = null)
+    {
+        var condutores = servicoCondutor.SelecionarTodos().Value;
+        var veiculos = servicoVeiculo.SelecionarTodos().Value;
+        var taxas = servicoTaxa.SelecionarTodos().Value;
+
+        if (formularioVm is null)
+            formularioVm = new InserirLocacaoViewModel();
+
+        formularioVm.Condutores =
+            condutores.Select(c => new SelectListItem(c.Nome, c.Id.ToString()));
+
+        formularioVm.Veiculos =
+            veiculos.Select(c => new SelectListItem(c.Modelo, c.Id.ToString()));
+
+        formularioVm.Taxas =
+            taxas.Select(c => new SelectListItem(c.ToString(), c.Id.ToString()));
+
+        return formularioVm;
+    }
+}
