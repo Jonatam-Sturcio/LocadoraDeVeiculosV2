@@ -60,6 +60,8 @@ public class Program
         builder.Services.AddScoped<TaxasValueResolver>();
         builder.Services.AddScoped<CondutoresValueResolver>();
         builder.Services.AddScoped<VeiculosValueResolver>();
+        builder.Services.AddScoped<ValorParcialValueResolver>();
+        builder.Services.AddScoped<ValorTotalValueResolver>();
 
         builder.Services.AddAutoMapper(cfg =>
         {

@@ -123,4 +123,25 @@ public class Locacao : EntidadeBase
 
         return qtdDiasLocacao;
     }
+
+    public decimal CalcularValorTotal(PlanoCobranca planoCobranca)
+    {
+        var valorParcial = CalcularValorParcial(planoCobranca);
+
+        decimal totalAbastecimento = 0;
+
+        if (Veiculo is not null && ConfiguracaoCombustivel is not null)
+        {
+            var valorCombustivel = ConfiguracaoCombustivel.ObterValorCombustivel(Veiculo.TipoCombustivel);
+
+            totalAbastecimento = Veiculo.CalcularLitrosParaAbastecimento(MarcadorCombustivel) * valorCombustivel;
+        }
+
+        decimal valorTotal = valorParcial + totalAbastecimento;
+
+        if (TemMulta()) // Multa de 10%
+            valorTotal += valorTotal * (10m / 100m);
+
+        return valorTotal;
+    }
 }
