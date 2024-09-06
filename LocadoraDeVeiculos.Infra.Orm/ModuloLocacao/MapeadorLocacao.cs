@@ -22,6 +22,10 @@ public class MapeadorLocacao : IEntityTypeConfiguration<Locacao>
             .HasColumnType("int")
             .IsRequired();
 
+        builder.Property(l => l.QuilometragemPercorrida)
+            .HasColumnType("int")
+            .IsRequired();
+
         builder.Property(l => l.DataLocacao)
             .HasColumnType("datetime2")
             .IsRequired();

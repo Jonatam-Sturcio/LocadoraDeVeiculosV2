@@ -34,4 +34,12 @@ public class Taxa : EntidadeBase
 
         return erros;
     }
+
+    public decimal CalcularValor(int quantidadeDeDias)
+    {
+        if (TipoCobranca == TipoCobrancaEnum.Diaria)
+            return Valor * quantidadeDeDias;
+
+        return Valor;
+    }
 }
