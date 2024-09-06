@@ -22,57 +22,46 @@ Desenvolvido durante o curso Fullstack da [Academia do Programador](https://www.
 
 ### Inclui:
 - Testes de Unidade
-- Testes de Integra��o
+- Testes de Integração
 - Testes e2e
 ---
 
 ## Detalhes
 
-O sistema visa facilitar o gerenciamento das opera��es de uma locadora de autom�veis,
-abrangendo desde o cadastro de funcion�rios, grupos de autom�veis, ve�culos e clientes at� a
-configura��o de pre�os de alugu�is e devolu��es.
+O sistema visa facilitar o gerenciamento das operações de uma locadora de automóveis, abrangendo desde o cadastro de funcionários, grupos de automóveis, veículos e clientes até a configuração de preços de aluguéis e devoluções.
 
-O sistema permitir� a cria��o de usu�rios para empresas que desejam utilizar a plataforma para
-gerenciar o aluguel de seus ve�culos. Usu�rios administradores dessas empresas ter�o a
-capacidade de cadastrar e gerenciar seus funcion�rios, incluindo a ativa��o e desativa��o de
-contas de usu�rio. Esses funcion�rios realizar�o tarefas operacionais, como o cadastro de ve�culos,
-registro de loca��es, entre outras atividades relacionadas.
+O sistema permitirá a criação de usuários para empresas que desejam utilizar a plataforma para gerenciar o aluguel de seus veículos. Usuários administradores dessas empresas terão a capacidade de cadastrar e gerenciar seus funcionários, incluindo a ativação e desativação de contas de usuário. Esses funcionários realizarão tarefas operacionais, como o cadastro de veículos, registro de locações, entre outras atividades relacionadas.
 
-Al�m disso, o sistema calcula o valor dos alugu�is considerando diversos fatores, como tipo do
-ve�culo, plano escolhido e taxas adicionais.
+Além disso, o sistema calcula o valor dos aluguéis considerando diversos fatores, como tipo do veículo, plano escolhido e taxas adicionais.
 
-A locadora oferecer� uma lista de taxas e servi�os que os clientes poder�o adicionar aos alugu�is.
-Cada taxa ou servi�o ter� um pre�o e indica��o se � fixo ou calculado por dia, afetando o pre�o
-total do aluguel.
+A locadora oferecerá uma lista de taxas e serviços que os clientes poderão adicionar aos aluguéis. Cada taxa ou serviço terá um preço e indicação se é fixo ou calculado por dia, afetando o preço total do aluguel.
 
-Ser� poss�vel registrar a devolu��o dos ve�culos, aplicando multas em caso de atraso. O sistema
-tamb�m permitir� configurar o pre�o do combust�vel para inclus�o no c�lculo dos alugu�is.
+Será possível registrar a devolução dos veículos, aplicando multas em caso de atraso. O sistema também permitirá configurar o preço do combustível para inclusão no cálculo dos aluguéis.
 
-O objetivo � proporcionar uma gest�o eficiente e uma experi�ncia positiva tanto para os
-funcion�rios quanto para os clientes da locadora.
+O objetivo é proporcionar uma gestão eficiente e uma experiência positiva tanto para os funcionários quanto para os clientes da locadora.
 
 ## Requisitos
 
-- .NET SDK (recomendado .NET 8.0 ou superior) para compila��o e execu��o do projeto.
+- .NET SDK (recomendado .NET 8.0 ou superior) para compilação e execução do projeto.
 ---
 ## Como Usar
 
-#### Clone o Reposit�rio
+#### Clone o Repositório
 ```
 git clone https://github.com/academia-do-programador/locadora-de-veiculos-2024.git
 ```
 
-#### Navegue at� a pasta raiz da solu��o
+#### Navegue até a pasta raiz da solução
 ```
 cd locadora-de-veiculos-2024
 ```
 
-#### Restaure as depend�ncias
+#### Restaure as dependências
 ```
 dotnet restore
 ```
 
-#### Navegue at� a pasta do projeto
+#### Navegue até a pasta do projeto
 ```
 cd LocadoraDeVeiculos.WebApp
 ```
@@ -80,4 +69,4 @@ cd LocadoraDeVeiculos.WebApp
 #### Execute o projeto
 ```
 dotnet run
-```****
+```
