@@ -1,4 +1,5 @@
 ﻿using FizzWare.NBuilder;
+using LocadoraDeVeiculos.Dominio.ModuloAutenticacao;
 using LocadoraDeVeiculos.Dominio.ModuloCliente;
 using LocadoraDeVeiculos.Dominio.ModuloCombustivel;
 using LocadoraDeVeiculos.Dominio.ModuloCondutor;
@@ -30,6 +31,8 @@ public abstract class RepositorioEmOrmTestsBase
     protected RepositorioGrupoVeiculosEmOrm repositorioGrupo;
     protected RepositorioPlanoCobrancaEmOrm repositorioPlano;
 
+    protected Usuario usuarioAutenticado;
+
     [TestInitialize]
     public void Inicializar()
     {
@@ -43,6 +46,15 @@ public abstract class RepositorioEmOrmTestsBase
         dbContext.Clientes.RemoveRange(dbContext.Clientes);
         dbContext.Veiculos.RemoveRange(dbContext.Veiculos);
         dbContext.GruposVeiculos.RemoveRange(dbContext.GruposVeiculos);
+        dbContext.Usuarios.RemoveRange(dbContext.Usuarios);
+
+        usuarioAutenticado = new()
+        {
+            UserName = "Empresa Teste",
+            Email = "empresa@gmail.com"
+        };
+
+        dbContext.Usuarios.Add(usuarioAutenticado);
 
         dbContext.SaveChanges();
 

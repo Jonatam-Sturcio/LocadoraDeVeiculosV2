@@ -14,11 +14,14 @@ public class RepositorioCondutorEmOrmTests : RepositorioEmOrmTestsBase
         var cliente = Builder<Cliente>
             .CreateNew()
             .With(c => c.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
             .Persist();
+
         var condutor = Builder<Condutor>
-        .CreateNew()
-        .With(c => c.Id = 0)
+            .CreateNew()
+            .With(c => c.Id = 0)
             .With(c => c.ClienteId = cliente.Id)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
             .Build();
 
         repositorioCondutor.Inserir(condutor);
@@ -35,13 +38,15 @@ public class RepositorioCondutorEmOrmTests : RepositorioEmOrmTestsBase
         var cliente = Builder<Cliente>
             .CreateNew()
             .With(c => c.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
             .Persist();
 
         var condutor = Builder<Condutor>
             .CreateNew()
             .With(c => c.Id = 0)
             .With(c => c.ClienteId = cliente.Id)
-        .Persist();
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Persist();
 
         condutor.Nome = "Nome Atualizado";
         condutor.Email = "novoemail@dominio.com";
@@ -60,13 +65,15 @@ public class RepositorioCondutorEmOrmTests : RepositorioEmOrmTestsBase
         var cliente = Builder<Cliente>
             .CreateNew()
             .With(c => c.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
             .Persist();
 
         var condutor = Builder<Condutor>
             .CreateNew()
-        .With(c => c.Id = 0)
+            .With(c => c.Id = 0)
             .With(c => c.ClienteId = cliente.Id)
-        .Persist();
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Persist();
 
         repositorioCondutor.Excluir(condutor);
 

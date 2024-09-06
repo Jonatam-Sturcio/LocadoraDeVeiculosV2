@@ -8,52 +8,61 @@ namespace LocadoraDeVeiculos.Testes.Integracao.ModuloGrupoVeiculos;
 [TestCategory("Integração")]
 public class RepositorioGrupoVeiculosOrmTests : RepositorioEmOrmTestsBase
 {
-	[TestMethod]
-	public void Deve_Inserir_GrupoVeiculos()
-	{
-		var grupo = Builder<GrupoVeiculos>
-			.CreateNew()
-			.With(g => g.Id = 0)
-			.Persist();
+    [TestMethod]
+    public void Deve_Inserir_GrupoVeiculos()
+    {
+        var grupo = Builder<GrupoVeiculos>
+            .CreateNew()
+            .With(g => g.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Build();
 
-		var grupoSelecionado = repositorioGrupo.SelecionarPorId(grupo.Id);
+        repositorioGrupo.Inserir(grupo);
 
-		Assert.IsNotNull(grupoSelecionado);
-		Assert.AreEqual(grupo, grupoSelecionado);
-	}
+        var grupoSelecionado = repositorioGrupo.SelecionarPorId(grupo.Id);
 
-	[TestMethod]
-	public void Deve_Editar_GrupoVeiculos()
-	{
-		var grupo = Builder<GrupoVeiculos>
-			.CreateNew()
-			.With(g => g.Id = 0)
-			.Persist();
+        Assert.IsNotNull(grupoSelecionado);
+        Assert.AreEqual(grupo, grupoSelecionado);
+    }
 
-		grupo.Nome = "Teste de Edição";
-		repositorioGrupo.Editar(grupo);
+    [TestMethod]
+    public void Deve_Editar_GrupoVeiculos()
+    {
+        var grupo = Builder<GrupoVeiculos>
+            .CreateNew()
+            .With(g => g.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Build();
 
-		var grupoSelecionado = repositorioGrupo.SelecionarPorId(grupo.Id);
+        repositorioGrupo.Inserir(grupo);
 
-		Assert.IsNotNull(grupoSelecionado);
-		Assert.AreEqual(grupo, grupoSelecionado);
-	}
+        grupo.Nome = "Teste de Edição";
+        repositorioGrupo.Editar(grupo);
 
-	[TestMethod]
-	public void Deve_Excluir_GrupoVeiculos()
-	{
-		var grupo = Builder<GrupoVeiculos>
-			.CreateNew()
-			.With(g => g.Id = 0)
-			.Persist();
+        var grupoSelecionado = repositorioGrupo.SelecionarPorId(grupo.Id);
 
-		repositorioGrupo.Excluir(grupo);
+        Assert.IsNotNull(grupoSelecionado);
+        Assert.AreEqual(grupo, grupoSelecionado);
+    }
 
-		var grupoSelecionado = repositorioGrupo.SelecionarPorId(grupo.Id);
+    [TestMethod]
+    public void Deve_Excluir_GrupoVeiculos()
+    {
+        var grupo = Builder<GrupoVeiculos>
+            .CreateNew()
+            .With(g => g.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Build();
 
-		var grupos = repositorioGrupo.SelecionarTodos();
+        repositorioGrupo.Inserir(grupo);
 
-		Assert.IsNull(grupoSelecionado);
-		Assert.AreEqual(0, grupos.Count);
-	}
+        repositorioGrupo.Excluir(grupo);
+
+        var grupoSelecionado = repositorioGrupo.SelecionarPorId(grupo.Id);
+
+        var grupos = repositorioGrupo.SelecionarTodos();
+
+        Assert.IsNull(grupoSelecionado);
+        Assert.AreEqual(0, grupos.Count);
+    }
 }

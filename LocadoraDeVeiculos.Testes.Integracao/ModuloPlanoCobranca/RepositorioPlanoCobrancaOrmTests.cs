@@ -8,73 +8,80 @@ namespace LocadoraDeVeiculos.Testes.Integracao.ModuloPlanoCobranca;
 [TestCategory("Integração")]
 public class RepositorioPlanoCobrancaEmOrmTests : RepositorioEmOrmTestsBase
 {
-	[TestMethod]
-	public void Deve_Inserir_PlanoCobranca()
-	{
-		var grupo = Builder<GrupoVeiculos>
-			.CreateNew()
-			.With(g => g.Id = 0)
-			.Persist();
 
-		var planoCobranca = Builder<PlanoCobranca>
-			.CreateNew()
-			.With(p => p.Id = 0)
-			.With(p => p.GrupoVeiculosId = grupo.Id)
-			.Build();
+    [TestMethod]
+    public void Deve_Inserir_PlanoCobranca()
+    {
+        var grupo = Builder<GrupoVeiculos>
+            .CreateNew()
+            .With(g => g.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Persist();
 
-		repositorioPlano.Inserir(planoCobranca);
+        var planoCobranca = Builder<PlanoCobranca>
+            .CreateNew()
+            .With(p => p.Id = 0)
+            .With(p => p.GrupoVeiculosId = grupo.Id)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Build();
 
-		var planoCobrancaSelecionado = repositorioPlano.SelecionarPorId(planoCobranca.Id);
+        repositorioPlano.Inserir(planoCobranca);
 
-		Assert.IsNotNull(planoCobrancaSelecionado);
-		Assert.AreEqual(planoCobranca, planoCobrancaSelecionado);
-	}
+        var planoCobrancaSelecionado = repositorioPlano.SelecionarPorId(planoCobranca.Id);
 
-	[TestMethod]
-	public void Deve_Editar_PlanoCobranca()
-	{
-		var grupo = Builder<GrupoVeiculos>
-			.CreateNew()
-			.With(g => g.Id = 0)
-			.Persist();
+        Assert.IsNotNull(planoCobrancaSelecionado);
+        Assert.AreEqual(planoCobranca, planoCobrancaSelecionado);
+    }
 
-		var planoCobranca = Builder<PlanoCobranca>
-			.CreateNew()
-			.With(p => p.Id = 0)
-			.With(p => p.GrupoVeiculosId = grupo.Id)
-			.Persist();
+    [TestMethod]
+    public void Deve_Editar_PlanoCobranca()
+    {
+        var grupo = Builder<GrupoVeiculos>
+            .CreateNew()
+            .With(g => g.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Persist();
 
-		planoCobranca.PrecoDiarioPlanoDiario = 200.0m;
+        var planoCobranca = Builder<PlanoCobranca>
+            .CreateNew()
+            .With(p => p.Id = 0)
+            .With(p => p.GrupoVeiculosId = grupo.Id)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Persist();
 
-		repositorioPlano.Editar(planoCobranca);
+        planoCobranca.PrecoDiarioPlanoDiario = 200.0m;
 
-		var planoCobrancaSelecionado = repositorioPlano.SelecionarPorId(planoCobranca.Id);
+        repositorioPlano.Editar(planoCobranca);
 
-		Assert.IsNotNull(planoCobrancaSelecionado);
-		Assert.AreEqual(planoCobranca, planoCobrancaSelecionado);
-	}
+        var planoCobrancaSelecionado = repositorioPlano.SelecionarPorId(planoCobranca.Id);
 
-	[TestMethod]
-	public void Deve_Excluir_PlanoCobranca()
-	{
-		var grupo = Builder<GrupoVeiculos>
-			.CreateNew()
-			.With(g => g.Id = 0)
-			.Persist();
+        Assert.IsNotNull(planoCobrancaSelecionado);
+        Assert.AreEqual(planoCobranca, planoCobrancaSelecionado);
+    }
 
-		var planoCobranca = Builder<PlanoCobranca>
-			.CreateNew()
-			.With(p => p.Id = 0)
-			.With(p => p.GrupoVeiculosId = grupo.Id)
-			.Persist();
+    [TestMethod]
+    public void Deve_Excluir_PlanoCobranca()
+    {
+        var grupo = Builder<GrupoVeiculos>
+            .CreateNew()
+            .With(g => g.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Persist();
 
-		repositorioPlano.Excluir(planoCobranca);
+        var planoCobranca = Builder<PlanoCobranca>
+            .CreateNew()
+            .With(p => p.Id = 0)
+            .With(p => p.GrupoVeiculosId = grupo.Id)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Persist();
 
-		var planoCobrancaSelecionado = repositorioPlano.SelecionarPorId(planoCobranca.Id);
+        repositorioPlano.Excluir(planoCobranca);
 
-		var planosCobranca = repositorioPlano.SelecionarTodos();
+        var planoCobrancaSelecionado = repositorioPlano.SelecionarPorId(planoCobranca.Id);
 
-		Assert.IsNull(planoCobrancaSelecionado);
-		Assert.AreEqual(0, planosCobranca.Count);
-	}
+        var planosCobranca = repositorioPlano.SelecionarTodos();
+
+        Assert.IsNull(planoCobrancaSelecionado);
+        Assert.AreEqual(0, planosCobranca.Count);
+    }
 }

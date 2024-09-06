@@ -7,55 +7,59 @@ namespace LocadoraDeVeiculos.Testes.Integracao.ModuloCliente;
 [TestCategory("Integração")]
 public class RepositorioClienteEmOrmTests : RepositorioEmOrmTestsBase
 {
-	[TestMethod]
-	public void Deve_Inserir_Cliente()
-	{
-		var cliente = Builder<Cliente>
-		.CreateNew()
-		.With(c => c.Id = 0)
-			.Build();
+    [TestMethod]
+    public void Deve_Inserir_Cliente()
+    {
+        var cliente = Builder<Cliente>
+            .CreateNew()
+            .With(c => c.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Build();
 
-		repositorioCliente.Inserir(cliente);
+        repositorioCliente.Inserir(cliente);
 
-		var clienteSelecionado = repositorioCliente.SelecionarPorId(cliente.Id);
+        var clienteSelecionado = repositorioCliente.SelecionarPorId(cliente.Id);
 
-		Assert.IsNotNull(clienteSelecionado);
-		Assert.AreEqual(cliente, clienteSelecionado);
-	}
+        Assert.IsNotNull(clienteSelecionado);
+        Assert.AreEqual(cliente, clienteSelecionado);
+    }
 
-	[TestMethod]
-	public void Deve_Editar_Cliente()
-	{
-		var cliente = Builder<Cliente>
-			.CreateNew()
-		.With(c => c.Id = 0)
-			.Persist();
+    [TestMethod]
+    public void Deve_Editar_Cliente()
+    {
+        var cliente = Builder<Cliente>
+            .CreateNew()
+            .With(c => c.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Persist();
 
-		cliente.Nome = "Nome Atualizado";
-		cliente.Email = "novoemail@dominio.com";
+        cliente.Nome = "Nome Atualizado";
+        cliente.Email = "novoemail@dominio.com";
 
-		repositorioCliente.Editar(cliente);
+        repositorioCliente.Editar(cliente);
 
-		var clienteSelecionado = repositorioCliente.SelecionarPorId(cliente.Id);
+        var clienteSelecionado = repositorioCliente.SelecionarPorId(cliente.Id);
 
-		Assert.IsNotNull(clienteSelecionado);
-		Assert.AreEqual(cliente, clienteSelecionado);
-	}
+        Assert.IsNotNull(clienteSelecionado);
+        Assert.AreEqual(cliente, clienteSelecionado);
+    }
 
-	[TestMethod]
-	public void Deve_Excluir_Cliente()
-	{
-		var cliente = Builder<Cliente>
-		.CreateNew()
-		.With(c => c.Id = 0)
-			.Persist();
-		repositorioCliente.Excluir(cliente);
+    [TestMethod]
+    public void Deve_Excluir_Cliente()
+    {
+        var cliente = Builder<Cliente>
+            .CreateNew()
+            .With(c => c.Id = 0)
+            .With(g => g.EmpresaId = usuarioAutenticado.Id)
+            .Persist();
 
-		var clienteSelecionado = repositorioCliente.SelecionarPorId(cliente.Id);
+        repositorioCliente.Excluir(cliente);
 
-		var clientes = repositorioCliente.SelecionarTodos();
+        var clienteSelecionado = repositorioCliente.SelecionarPorId(cliente.Id);
 
-		Assert.IsNull(clienteSelecionado);
-		Assert.AreEqual(0, clientes.Count);
-	}
+        var clientes = repositorioCliente.SelecionarTodos();
+
+        Assert.IsNull(clienteSelecionado);
+        Assert.AreEqual(0, clientes.Count);
+    }
 }
